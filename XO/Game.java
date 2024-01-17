@@ -4,15 +4,8 @@ import java.util.Arrays;
 
 public abstract class Game {
 	private char[][] gameBoard = new char[5][5];
-	private Player p1;
-	private Player p2;
 	private Player turn;
 	private GameCoordinates coord;
-	
-	public Game(Player p1, Player p2) {
-		this.p1 = p1;
-		this.p2 = p2;
-	}
 
 	public char[][] getGameBoard() {
 		return gameBoard;
@@ -33,22 +26,6 @@ public abstract class Game {
 	
 	public void setTurn(Player turn) {
 		this.turn = turn;
-	}
-
-	public Player getP1() {
-		return p1;
-	}
-
-	public void setP1(Player p1) {
-		this.p1 = p1;
-	}
-
-	public Player getP2() {
-		return p2;
-	}
-
-	public void setP2(Player p2) {
-		this.p2 = p2;
 	}
 
 	public void printBoard() {
@@ -76,7 +53,6 @@ public abstract class Game {
 					counter++;
 				}
 		}
-
 		coords = Arrays.copyOfRange(coords, 0, counter);
 		return coords;
 	}
@@ -134,5 +110,9 @@ public abstract class Game {
 			}
 		}
 		return false;
+	}
+	
+	public void makeMove(GameCoordinates coord, char XorO) {
+		gameBoard[coord.getRow()][coord.getCol()] = XorO;
 	}
 }

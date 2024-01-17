@@ -3,9 +3,11 @@ import XO.Game;
 
 public abstract class Player {
 	protected char playerType;
+	protected Game sg;
 
-	public Player(char type) {
-		playerType = type;
+	public Player(char playerType, Game sg) {
+		this.playerType = playerType;
+		this.sg = sg;
 	}
 	
 	public char getPlayerType() {
@@ -17,4 +19,5 @@ public abstract class Player {
 	}
 	
 	public abstract GameCoordinates coordToPlay(GameCoordinates[] coordinates);
+	public abstract void play();
 }
