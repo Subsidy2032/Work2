@@ -5,6 +5,10 @@ public class UserPlayer extends Player implements Runnable {
 		super(type);
 	}
 	
+	public GameCoordinates coordToPlay(GameCoordinates[] coordinates) {
+		return null;
+	}
+
 	public void run() {
 	}
 }
