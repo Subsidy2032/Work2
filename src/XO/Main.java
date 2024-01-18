@@ -15,8 +15,8 @@ public class Main {
 			SelfGame selfGame = new SelfGame();
 			selfGame.startGame();
 		} else if (choice == 2) {
-			// UserGame userGame = new UserGame();
-			// userGame.startGame();
+			UserGame userGame = new UserGame();
+			userGame.startGame();
 		} else {
 			System.out.println("");
 		}

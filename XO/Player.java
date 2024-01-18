@@ -1,13 +1,16 @@
 package XO;
+import java.util.List;
+
 import XO.Game;
 
 public abstract class Player {
 	protected char playerType;
-	protected Game sg;
+	protected Game game;
+	private boolean keepPlaying;
 
-	public Player(char playerType, Game sg) {
+	public Player(char playerType, Game game) {
 		this.playerType = playerType;
-		this.sg = sg;
+		this.game = game;
 	}
 	
 	public char getPlayerType() {
@@ -18,6 +21,18 @@ public abstract class Player {
 		this.playerType = playerType;
 	}
 	
-	public abstract GameCoordinates coordToPlay(GameCoordinates[] coordinates);
-	public abstract void play();
+	public boolean getKeepPlaying() {
+		return keepPlaying;
+	}
+	
+	public void setKeepPlaying(boolean keepPlaying) {
+		this.keepPlaying = keepPlaying;
+	}
+	
+	public boolean isMyTurn() {
+		return game.getTurn() == playerType;
+	}
+	
+	public abstract GameCoordinates coordToPlay(List<GameCoordinates> freeCells);
+	public abstract void playTurn();
 }

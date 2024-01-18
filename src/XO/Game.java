@@ -5,23 +5,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Game {
-	protected char[][] gameBoard = new char[5][5];
-	private char turn;
-    
+	private final char[][] gameBoard = new char[5][5];
+	private GameCoordinates coordinates;
+
 	public char[][] getGameBoard() {
 		return gameBoard;
 	}
-	
-	public char getTurn() {
-		return turn;
+
+	public void placeXOinBoard(GameCoordinates XO, char playerType) {
+		gameBoard[coordinates.getRow()][coordinates.getCol()] = playerType;
 	}
-	
-	public void setTurn(Player played) {
-		turn = played.getPlayerType() == 'X' ? 'O':'X';
+
+	public GameCoordinates getCoordinates() {
+		return coordinates;
 	}
-	
-	public boolean isCellFree(int row, int col) {
-		return gameBoard[row][col] == '\u0000';
+
+	public void setCoordinates(GameCoordinates coordinates) {
+		this.coordinates = coordinates;
 	}
 
 	public void printBoard() {
@@ -30,15 +30,24 @@ public abstract class Game {
 				if (gameBoard[i][j] == 'X' || gameBoard[i][j] == 'O')
 					System.out.print(gameBoard[i][j]);
 				else
-					System.out.print("-");
+					System.out.print(" ");
 
 				if (j < 4)
 					System.out.print(" ");
 			}
 			System.out.println();
 		}
-		
-		System.out.println();
+	}
+
+	public boolean isBoardFull() {
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				if (gameBoard[i][j] == '\u0000') {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public List<GameCoordinates> getFreeCells() {
@@ -52,21 +61,13 @@ public abstract class Game {
 		}
 		return freeCells;
 	}
-	
-	public boolean isBoardFull() {
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				if (gameBoard[i][j] == '\u0000') {
-					return false;
-				}
-			}
-		}
-		return true;
+
+	public boolean isCellFree(int row, int col) {
+		return gameBoard[row][col] == '\u0000';
 	}
 	
 	public boolean isWinner(Player p) {
 		return (winningByRowCol(p) || winningByDiagonal(p));
-		// System.out.print(winner) stop game
 	}
 
 	private boolean winningByRowCol(Player p) {
@@ -118,10 +119,6 @@ public abstract class Game {
 		}
 		return false;
 	}
-	
-	public void placeXOinBoard(GameCoordinates coord, char XorO) {
-		gameBoard[coord.getRow()][coord.getCol()] = XorO;
-	}
-	
-	public abstract void startGame();
+
+	public abstract char getTurn();
 }

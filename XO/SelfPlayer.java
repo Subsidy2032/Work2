@@ -1,36 +1,63 @@
 package XO;
+import java.util.List;
 import java.util.Random;
 
 public class SelfPlayer extends Player implements Runnable {
 	
-	public SelfPlayer(char playerType, Game sg) {
-		super(playerType, sg);
+	public SelfPlayer(char playerType, Game game) {
+		super(playerType, game);
 	}
 	
-	public GameCoordinates getRandomCell(GameCoordinates[] coordinates) {
+	public GameCoordinates getRandomCell(List<GameCoordinates> freeCells) {
 		Random generator = new Random();
-		int randomIndex = generator.nextInt(coordinates.length);
-		return coordinates[randomIndex];
+		int randomIndex = generator.nextInt(freeCells.size());
+		return freeCells.get(randomIndex);
 	}
 	
-	public GameCoordinates coordToPlay(GameCoordinates[] coordinates) {
-		GameCoordinates toPlay = getRandomCell(coordinates);
+	public GameCoordinates coordToPlay(List<GameCoordinates> freeCells) {
+		GameCoordinates toPlay = getRandomCell(freeCells);
 		return toPlay;
 	}
 	
-	public synchronized void play() {
+	@Override
+	public synchronized void playTurn() {
 		try {
-			while(playerType != sg.getTurn().playerType)
+			while(!isMyTurn()) {
 				Thread.sleep(500);
+				if(game.isBoardFull()) {
+					if(playerType == 'X')
+						System.out.println("Board is full");
+					setKeepPlaying(false);
+					return;
+				}
+				
+			}
 		}
 		
-		catch(Exception e) {}
+		catch(InterruptedException e) {}
+		
+		if(game.isWinner(playerType == 'X' ? new SelfPlayer('O', game):new SelfPlayer('X', game))) {
+			setKeepPlaying(false);
+			return;
+		}
+		List<GameCoordinates> freeCells = game.getFreeCells();
+		GameCoordinates randomCoordinate = getRandomCell(freeCells);
+		game.placeXOinBoard(randomCoordinate, playerType);
+		
+		if(game.isWinner(this)) {
+			setKeepPlaying(false);
+			return;
+		}
+		
+		game.printBoard();
+		game.setTurn(this);
 	}
 	
 	public void run() {
-		boolean keepPlaying = true;
+		setKeepPlaying(true);
 		
-		while(keepPlaying) {
+		while(getKeepPlaying()) {
+			playTurn();
 		}
 	}
 	
