@@ -1,16 +1,21 @@
 package XO;
 
+// Ron Bitan (315924316) && Noam Muchink (212472484)
+//Github: https://github.com/Subsidy2032/Work2
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
 public class Main {
 	public static void main(String[] args) {
+		// Asks from the user the type of game he wants to play
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("Choose the game type:");
 		System.out.println("1. Computer vs. Computer");
 		System.out.println("2. User vs. Computer");
 		int choice;
+		
+		// Runs until the user enters a valid choice and handles exceptions
 		while(true) {
 			try {
 				choice = scanner.nextInt();
@@ -30,15 +35,20 @@ public class Main {
 				System.out.println("Invalid input. Try again.");
 				scanner.nextLine();
 			}
-		}
-
+		} // End of while loop
+		
+		// If the user chose to play a self game, creates a self game object and starts the game
 		if (choice == 1) {
 			SelfGame selfGame = new SelfGame();
 			selfGame.startGame();
-		} else if (choice == 2) {
+		}
+		
+		// If the user chose to play a user game asks him with which char he wants to play (X or O)
+		else if (choice == 2) {
 			System.out.println("Choose what type you want to play with (X or O): ");
 			char type = '\u0000';
 			
+			// Runs until the user enters a valid choice and handles exceptions
 			while(true) {
 				try {
 					type = scanner.next().charAt(0);
@@ -58,12 +68,13 @@ public class Main {
 					System.out.println("Invalid input. Try again.");
 					scanner.nextLine();
 				}
-			}
+			} // End of while loop
 			
+			// If the user chose to play a user game, creates a user game object with the type the user chose and starts the game
 			UserGame userGame = new UserGame(type);
 			userGame.startGame();
-		} else {
-			System.out.println("");
 		}
+		
+		scanner.close();
 	}
 }

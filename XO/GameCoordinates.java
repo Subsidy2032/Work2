@@ -1,14 +1,30 @@
 package XO;
 
+/**
+ * A class to describe a coordinate on the game board
+ * @author Ron Bitan (315924316) && Noam Muchink (212472484)
+ *
+ */
 public class GameCoordinates {
+	/**
+	 * The row in the board
+	 */
 	private int row;
+	/**
+	 * The column in the board
+	 */
 	private int col;
 	
+	/**
+	 * A constructor to build a coordinate
+	 * @param row The row in the board
+	 * @param col The column in the board
+	 */
 	public GameCoordinates(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
-
+	
 	public int getRow() {
 		return row;
 	}
