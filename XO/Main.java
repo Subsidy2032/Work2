@@ -15,8 +15,10 @@ public class Main {
 			SelfGame selfGame = new SelfGame();
 			selfGame.startGame();
 		} else if (choice == 2) {
-			// UserGame userGame = new UserGame();
-			// userGame.startGame();
+			System.out.println("Choose what type you want to play with (X or O): ");
+			char type = scanner.next().charAt(0);
+			UserGame userGame = new UserGame(type);
+			userGame.startGame();
 		} else {
 			System.out.println("");
 		}

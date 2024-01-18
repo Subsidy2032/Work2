@@ -40,11 +40,44 @@ public class UserPlayer extends Player implements Runnable {
 	}
 	
 	public synchronized void playTurn() {
+		try {
+			while(!isMyTurn()) {
+				Thread.sleep(500);
+				if(game.isBoardFull()) {
+					if(playerType == 'X')
+						System.out.println("Board is full");
+					setKeepPlaying(false);
+					return;
+				}
+				
+			}
+		}
+		
+		catch(InterruptedException e) {}
+		
+		if(game.isWinner(playerType == 'X' ? new SelfPlayer('O', game):new SelfPlayer('X', game))) {
+			setKeepPlaying(false);
+			return;
+		}
+		
 		List<GameCoordinates> freeCells = game.getFreeCells();
 		GameCoordinates playerChoice = coordToPlay(freeCells);
 		game.placeXOinBoard(playerChoice, playerType);
+		
+		if(game.isWinner(this)) {
+			setKeepPlaying(false);
+			return;
+		}
+		
+		game.printBoard();
+		game.setTurn(this);
 	}
 	
 	public void run() {
+		setKeepPlaying(true);
+		
+		while(getKeepPlaying()) {
+			playTurn();
+		}
 	}
 }
