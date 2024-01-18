@@ -16,10 +16,6 @@ public abstract class Player {
 	public char getPlayerType() {
 		return playerType;
 	}
-
-	public void setPlayerType(char playerType) {
-		this.playerType = playerType;
-	}
 	
 	public boolean getKeepPlaying() {
 		return keepPlaying;

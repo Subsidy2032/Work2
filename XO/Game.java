@@ -7,10 +7,6 @@ import java.util.ArrayList;
 public abstract class Game {
 	protected char[][] gameBoard = new char[5][5];
 	private char turn;
-    
-	public char[][] getGameBoard() {
-		return gameBoard;
-	}
 	
 	public char getTurn() {
 		return turn;
@@ -66,7 +62,6 @@ public abstract class Game {
 	
 	public boolean isWinner(Player p) {
 		return (winningByRowCol(p) || winningByDiagonal(p));
-		// System.out.print(winner) stop game
 	}
 
 	private boolean winningByRowCol(Player p) {

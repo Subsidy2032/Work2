@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class UserPlayer extends Player implements Runnable {
 	Scanner scanner = new Scanner(System.in);
@@ -12,10 +13,10 @@ public class UserPlayer extends Player implements Runnable {
 	}
 	
 	public GameCoordinates coordToPlay(List<GameCoordinates> freeCells) {
-		System.out.println("Enter row and column (separated by space): ");
+		System.out.println("Enter row and column between 1-5 (separated by space): ");
 		Scanner scanner = new Scanner(System.in);
-		int row = -1;
-		int col = -1;
+		int row;
+		int col;
 
 		while (true) {
 			try {
@@ -25,16 +26,22 @@ public class UserPlayer extends Player implements Runnable {
 				if (row > 0 && row <= 5 && col > 0 && col <= 5 && game.isCellFree(row - 1, col - 1)) {
 					break;
 				} else {
-					System.out.println("Invalid input. Try again.");
+					throw new IllegalArgumentException("The cell must be free, and the numbers should be between 1 to 5");
 				}
 			}
 			
-			catch (Exception e) {
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				scanner.nextLine();
+			}
+			
+			catch(InputMismatchException e) {
 				System.out.println("Invalid input. Try again.");
 				scanner.nextLine();
 			}
 		}
-
+		
+		System.out.println();
 		GameCoordinates playerChoice = new GameCoordinates(row - 1, col - 1);
 		return playerChoice;
 	}
