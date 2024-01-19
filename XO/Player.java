@@ -18,9 +18,13 @@ public abstract class Player {
 	 * To track if the player should keep playing
 	 */
 	private boolean keepPlaying;
+	/**
+	 * An object that is used as a lock
+	 */
+	protected static final Object LOCK = new Object();
 	
 	/**
-	 * Constructor to create a player assoicated with a game
+	 * Constructor to create a player associated with a game
 	 * @param playerType The type of the player
 	 * @param game The game the player is part of
 	 */

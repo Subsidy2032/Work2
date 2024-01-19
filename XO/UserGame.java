@@ -43,11 +43,11 @@ public class UserGame extends Game {
 	    		
 	    		printBoard();
 	    		if(isWinner(computer.playerType == 'X' ? computer:user)) {
-	    			System.out.println("The X player won");
+	    			System.out.println("Player X has won!");
 	    		}
 	    		
 	    		else
-	    			System.out.println("The O player won");
+	    			System.out.println("Player O has won!");
 	    		
 	    		break;
 	    	}

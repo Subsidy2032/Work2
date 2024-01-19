@@ -24,7 +24,7 @@ public class Racer implements Runnable {
 	/**
 	 * An object that is used as a lock
 	 */
-	private Object lock = new Object();
+	private static final Object LOCK = new Object();
 	
 	/**
 	 * The constructor to build the racer
@@ -54,7 +54,7 @@ public class Racer implements Runnable {
 		}
 		
 		// Prints the finishing place
-		synchronized(lock) {
+		synchronized(LOCK) {
 			track.finishedRacers++;
 			System.out.println("Runner " + id + " finished " + track.finishedRacers + ((track.finishedRacers == 1) ? "st":(track.finishedRacers == 2) ? "nd":(track.finishedRacers == 3) ? "rd" : "th"));
 		}
