@@ -34,7 +34,7 @@ public class UserPlayer extends Player implements Runnable {
 			try {
 				row = scanner.nextInt();
 				
-				if (row < 0 || row > 5)
+				if (row < 1 || row > 5)
 					throw new IllegalArgumentException("The raw number should be between 1 to 5! try again");
 					
 				else
@@ -59,7 +59,7 @@ public class UserPlayer extends Player implements Runnable {
 			try {
 				col = scanner.nextInt();
 				
-				if (col < 0 || col > 5)
+				if (col < 1 || col > 5)
 					throw new IllegalArgumentException("The column number should be between 1 to 5! try again.");
 				
 				else if (!game.isCellFree(row - 1, col - 1))

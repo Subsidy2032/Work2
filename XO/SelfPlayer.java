@@ -85,9 +85,7 @@ public class SelfPlayer extends Player implements Runnable {
 			playTurn();
 			try {
 				// The player sleeps for 500ms after his turn
-				while(!isMyTurn()) {
-					Thread.sleep(500);
-				}
+				Thread.sleep(500);
 			}
 			
 			catch(InterruptedException e) {}

@@ -28,6 +28,7 @@ public class SelfGame extends Game {
     	
     	t1.start();
     	t2.start();
+    	
     	while(true) {
     		// Stop the players if one of them won and print the board and the winner
 	    	if(isWinner(playerX) || isWinner(playerO)) {
@@ -36,11 +37,11 @@ public class SelfGame extends Game {
 	    		
 	    		printBoard();
 	    		if(isWinner(playerX)) {
-	    			System.out.println("The X player won");
+	    			System.out.println("Player X has won!");
 	    		}
 	    		
 	    		else
-	    			System.out.println("The O player won");
+	    			System.out.println("Player O has won!");
 	    		
 	    		break;
 	    	}
