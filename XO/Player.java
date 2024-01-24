@@ -14,14 +14,6 @@ public abstract class Player {
 	 * The game the player is part of
 	 */
 	protected Game game;
-	/**
-	 * To track if the player should keep playing
-	 */
-	private boolean keepPlaying;
-	/**
-	 * An object that is used as a lock
-	 */
-	protected static final Object LOCK = new Object();
 	
 	/**
 	 * Constructor to create a player associated with a game
@@ -39,22 +31,6 @@ public abstract class Player {
 	 */
 	public char getPlayerType() {
 		return playerType;
-	}
-	
-	/**
-	 * 
-	 * @return If the player should keep playing
-	 */
-	public boolean getKeepPlaying() {
-		return keepPlaying;
-	}
-	
-	/**
-	 * 
-	 * @param keepPlaying To set if the player should keep playing
-	 */
-	public void setKeepPlaying(boolean keepPlaying) {
-		this.keepPlaying = keepPlaying;
 	}
 	
 	/**

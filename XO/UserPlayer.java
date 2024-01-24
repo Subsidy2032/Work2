@@ -35,7 +35,7 @@ public class UserPlayer extends Player implements Runnable {
 				row = scanner.nextInt();
 				
 				if (row < 1 || row > 5)
-					throw new IllegalArgumentException("The raw number should be between 1 to 5! try again");
+					throw new IllegalArgumentException("The row number should be between 1 to 5! try again");
 					
 				else
 					break;
@@ -89,11 +89,11 @@ public class UserPlayer extends Player implements Runnable {
 	 * A method to play a turn
 	 */
 	public void playTurn() {
-		synchronized(LOCK) {
+		synchronized(game) {
 			try {
 				// The player waits for his turn
 				while(!isMyTurn()) {
-					LOCK.wait();
+					game.wait();
 				}
 			}
 			
@@ -101,32 +101,26 @@ public class UserPlayer extends Player implements Runnable {
 			}
 			
 			// Checks if the other player won and exists the function if he did
-			if(game.isWinner(playerType == 'X' ? new SelfPlayer('O', game):new SelfPlayer('X', game))) {
-				setKeepPlaying(false);
+			if(game.isBoardFull() || !game.getKeepPlaying()) {
+				game.setKeepPlaying(false);
 				return;
 			}
 			
-			// The player terminates the program if the board is full
-			if(game.isBoardFull()) {
-				System.out.println("Board is full");
-				System.exit(0);
-			}
-			
-			// Puts the player type's on the board in the coordinate he chose to play
+			// Puts the player type's on the board in the coordinate he chose to play, and set the turn to the other player
 			GameCoordinates playerChoice = coordToPlay();
 			game.placeXOinBoard(playerChoice, playerType);
+			game.setTurn(this);
 			
 			// Checks if the current player is a winner, exists the function if he is
 			if(game.isWinner(this)) {
-				setKeepPlaying(false);
+				game.setKeepPlaying(false);
 				return;
 			}
 			
 			// Prints the board and set the turn to the other player
 			game.printBoard();
-			game.setTurn(this);
 			// The player that just played notifies the other player that it's his turn
-			LOCK.notifyAll();
+			game.notifyAll();
 		}
 	}
 	
@@ -134,9 +128,9 @@ public class UserPlayer extends Player implements Runnable {
 	 * Runs the thread
 	 */
 	public void run() {
-		setKeepPlaying(true);
+		game.setKeepPlaying(true);
 		
-		while(getKeepPlaying()) {
+		while(game.getKeepPlaying()) {
 			playTurn();
 		}
 		

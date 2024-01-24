@@ -30,27 +30,34 @@ public class UserGame extends Game {
      * A method to start the user game
      */
     public void startGame() {
-    	Thread t1 = new Thread(computer);
-    	Thread t2 = new Thread(user);
+    	Thread computerThread = new Thread(computer);
+    	Thread userThread = new Thread(user);
     	
-    	t1.start();
-    	t2.start();
-    	while(true) {
-    		// Stop the players if one of them won and print the board and the winner
-	    	if(isWinner(computer) || isWinner(user)) {
-	    		t1.interrupt();
-	    		t2.interrupt();
-	    		
-	    		printBoard();
-	    		if(isWinner(computer.playerType == 'X' ? computer:user)) {
-	    			System.out.println("Player X has won!");
-	    		}
-	    		
-	    		else
-	    			System.out.println("Player O has won!");
-	    		
-	    		break;
-	    	}
+    	computerThread.start();
+    	userThread.start();
+    	
+    	try {
+    		computerThread.join();
+    		userThread.join();
+    	}
+    	
+    	catch(InterruptedException e) {}
+    	
+		// Stops the game if one of the players won and print the board and the winner
+    	if(isWinner(computer) || isWinner(user)) {
+    		printBoard();
+    		if(isWinner(computer.playerType == 'X' ? computer:user)) {
+    			System.out.println("Player X has won!");
+    		}
+    		
+    		else
+    			System.out.println("Player O has won!");
+    		
+    	}
+    	
+    	// Stops the game if the board is full
+    	if(this.isBoardFull()) {
+    		System.out.println("Board is full");
     	}
     }
 }

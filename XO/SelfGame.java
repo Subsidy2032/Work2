@@ -23,28 +23,35 @@ public class SelfGame extends Game {
      * A method to start the game
      */
     public void startGame() {
-    	Thread t1 = new Thread(playerX);
-    	Thread t2 = new Thread(playerO);
+    	Thread threadX = new Thread(playerX);
+    	Thread threadY = new Thread(playerO);
     	
-    	t1.start();
-    	t2.start();
+    	threadX.start();
+    	threadY.start();
     	
-    	while(true) {
-    		// Stop the players if one of them won and print the board and the winner
-	    	if(isWinner(playerX) || isWinner(playerO)) {
-	    		t1.interrupt();
-	    		t2.interrupt();
-	    		
-	    		printBoard();
-	    		if(isWinner(playerX)) {
-	    			System.out.println("Player X has won!");
-	    		}
-	    		
-	    		else
-	    			System.out.println("Player O has won!");
-	    		
-	    		break;
-	    	}
+    	// Making sure only the 2 created threads are running
+    	try {
+	    	threadX.join();
+	    	threadY.join();
+    	}
+    	
+    	catch(InterruptedException e) {}
+    	
+    	// Stops the game if one of the players won and print the board and the winner
+    	if(isWinner(playerX) || isWinner(playerO)) {
+    		printBoard();
+    		if(isWinner(playerX)) {
+    			System.out.println("Player X has won!");
+    		}
+    		
+    		else
+    			System.out.println("Player O has won!");
+    		
+    	}
+    	
+    	// Stops the game if the board is full
+    	if(this.isBoardFull()) {
+    		System.out.println("Board is full");
     	}
     }
 }

@@ -34,44 +34,38 @@ public class SelfPlayer extends Player implements Runnable {
 	 */
 	@Override
 	public void playTurn() {
-		synchronized(LOCK) {
+		synchronized(game) {
 			try {
 				// The player waits for his turn
 				while(!isMyTurn()) {
-					LOCK.wait();
+					game.wait();
 				}
 			}
 			
 			catch(InterruptedException e) {}
 			
-			// Checks if the other player won and exists the function if he did
-			if(game.isWinner(playerType == 'X' ? new SelfPlayer('O', game):new SelfPlayer('X', game))) {
-				setKeepPlaying(false);
+			// Exists the function if the board is full
+			if(game.isBoardFull() || !game.getKeepPlaying()) {
+				game.setKeepPlaying(false);
 				return;
 			}
 			
-			// The player terminates the program if the board is full
-			if(game.isBoardFull()) {
-				System.out.println("Board is full");
-				System.exit(0);
-			}
-			
-			// Places the player type char's on a random cell in the board
+			// Places the player type char's on a random cell in the board and sets the turn to the other player
 			List<GameCoordinates> freeCells = game.getFreeCells();
 			GameCoordinates randomCoordinate = getRandomCell(freeCells);
 			game.placeXOinBoard(randomCoordinate, playerType);
+			game.setTurn(this);
 			
 			// Checks if the current player is a winner, exists the function if he is
 			if(game.isWinner(this)) {
-				setKeepPlaying(false);
+				game.setKeepPlaying(false);
 				return;
 			}
 			
 			// Prints the board and set the turn to the other player
 			game.printBoard();
-			game.setTurn(this);
 			// The player that just played notifies the other player that it's his turn
-			LOCK.notifyAll();
+			game.notifyAll();
 		}
 	}
 	
@@ -79,9 +73,9 @@ public class SelfPlayer extends Player implements Runnable {
 	 * Runs the thread
 	 */
 	public void run() {
-		setKeepPlaying(true);
+		game.setKeepPlaying(true);
 		
-		while(getKeepPlaying()) {
+		while(game.getKeepPlaying()) {
 			playTurn();
 			try {
 				// The player sleeps for 500ms after his turn

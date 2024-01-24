@@ -17,6 +17,26 @@ public abstract class Game {
 	 * The current player type's turn
 	 */
 	private char turn;
+	/**
+	 * To track if the players should keep playing
+	 */
+	private boolean keepPlaying;
+	
+	/**
+	 * 
+	 * @return If the player should keep playing
+	 */
+	public boolean getKeepPlaying() {
+		return keepPlaying;
+	}
+	
+	/**
+	 * 
+	 * @param keepPlaying To set if the player should keep playing
+	 */
+	public void setKeepPlaying(boolean keepPlaying) {
+		this.keepPlaying = keepPlaying;
+	}
 	
 	/**
 	 * 
