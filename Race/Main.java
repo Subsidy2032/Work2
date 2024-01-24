@@ -13,10 +13,10 @@ public class Main {
 		
 		// Initializes the racers
 		try {
-			racer1 = new Racer(10, track);
-			racer2 = new Racer(2, track);
-			racer3 = new Racer(3, track);
-			racer4 = new Racer(7, track);
+			racer1 = new Racer(5, track); //10
+			racer2 = new Racer(5, track); //2
+			racer3 = new Racer(5, track); //3
+			racer4 = new Racer(5, track); //7
 		}
 		
 		catch(IllegalArgumentException e) {

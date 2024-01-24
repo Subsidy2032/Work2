@@ -21,10 +21,6 @@ public class Racer implements Runnable {
 	 * The track the racer is in
 	 */
 	private Track track;
-	/**
-	 * An object that is used as a lock
-	 */
-	private static final Object LOCK = new Object();
 	
 	/**
 	 * The constructor to build the racer
@@ -49,12 +45,12 @@ public class Racer implements Runnable {
 		Thread.currentThread().setPriority(speed); // Sets the speed of the player
 		
 		// A loop of the player running
-		for(int i = 1; i <= 100; i++) {
+		for(int i = 1; i <= 99; i++) {
 			System.out.println("Runner " + id + " ran " + i + " meters.");
 		}
 		
-		// Prints the finishing place
-		synchronized(LOCK) {
+		synchronized(track) {
+			System.out.println("Runner " + id + " ran 100 meters.");
 			track.finishedRacers++;
 			System.out.println("Runner " + id + " finished " + track.finishedRacers + ((track.finishedRacers == 1) ? "st":(track.finishedRacers == 2) ? "nd":(track.finishedRacers == 3) ? "rd" : "th"));
 		}

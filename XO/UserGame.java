@@ -56,7 +56,7 @@ public class UserGame extends Game {
     	}
     	
     	// Stops the game if the board is full
-    	if(this.isBoardFull()) {
+    	else if(this.isBoardFull()) {
     		System.out.println("Board is full");
     	}
     }

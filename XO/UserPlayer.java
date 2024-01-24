@@ -24,46 +24,31 @@ public class UserPlayer extends Player implements Runnable {
 	 * @return The coordinate the user chose to play
 	 */
 	public GameCoordinates coordToPlay() {
-		int row;
-		int col;
-		
-		System.out.print("Enter row to play (1-5): ");
+		int row = 0;
+		int col = 0;
+		boolean cellFree = true;
 		
 		while (true) {
-			// Get the row and column that the user wants to play and handle exceptions
 			try {
-				row = scanner.nextInt();
-				
-				if (row < 1 || row > 5)
-					throw new IllegalArgumentException("The row number should be between 1 to 5! try again");
+				if(row < 1 || row > 5 || !cellFree) {
+					cellFree = true;
+					System.out.print("Enter row to play (1-5): ");
+					row = scanner.nextInt();
 					
-				else
-					break;
-			}
-			
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-				scanner.nextLine();
-			}
-			
-			catch(InputMismatchException e) {
-				System.out.println("Invalid input. Try again.");
-				scanner.nextLine();
-			}
-		}
-		
-		System.out.print("Enter column to play (1-5): ");
-		
-		while (true) {
-			// Get the row and column that the user wants to play and handle exceptions
-			try {
+					if (row < 1 || row > 5)
+						throw new IllegalArgumentException("The row number should be between 1 to 5! try again");
+				}
+				
+				System.out.print("Enter column to play (1-5): ");
 				col = scanner.nextInt();
 				
 				if (col < 1 || col > 5)
 					throw new IllegalArgumentException("The column number should be between 1 to 5! try again.");
 				
-				else if (!game.isCellFree(row - 1, col - 1))
+				else if (!game.isCellFree(row - 1, col - 1)) {
+					cellFree = false;
 					throw new IllegalArgumentException("The cell must be free! try again.");
+				}
 				
 				else
 					break;
