@@ -88,6 +88,8 @@ public class UserPlayer extends Player implements Runnable {
 			// Checks if the other player won and exists the function if he did
 			if(game.isBoardFull() || !game.getKeepPlaying()) {
 				game.setKeepPlaying(false);
+				game.setTurn(this);
+				game.notifyAll();
 				return;
 			}
 			
@@ -117,6 +119,12 @@ public class UserPlayer extends Player implements Runnable {
 		
 		while(game.getKeepPlaying()) {
 			playTurn();
+			try {
+				// The player sleeps for 500ms after his turn
+				Thread.sleep(500);
+			}
+			
+			catch(InterruptedException e) {}
 		}
 		
 		scanner.close();

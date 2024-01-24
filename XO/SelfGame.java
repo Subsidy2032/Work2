@@ -37,7 +37,7 @@ public class SelfGame extends Game {
     	
     	catch(InterruptedException e) {}
     	
-    	// Stops the game if one of the players won and print the board and the winner
+    	// Prints who won the game, if someone won
     	if(isWinner(playerX) || isWinner(playerO)) {
     		printBoard();
     		if(isWinner(playerX)) {
@@ -49,7 +49,7 @@ public class SelfGame extends Game {
     		
     	}
     	
-    	// Stops the game if the board is full
+    	// Prints that the board is full if no one won
     	else if(this.isBoardFull()) {
     		System.out.println("Board is full");
     	}

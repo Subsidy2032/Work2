@@ -43,7 +43,7 @@ public class UserGame extends Game {
     	
     	catch(InterruptedException e) {}
     	
-		// Stops the game if one of the players won and print the board and the winner
+    	// Prints who won the game, if someone won
     	if(isWinner(computer) || isWinner(user)) {
     		printBoard();
     		if(isWinner(computer.playerType == 'X' ? computer:user)) {
@@ -55,7 +55,7 @@ public class UserGame extends Game {
     		
     	}
     	
-    	// Stops the game if the board is full
+    	// Prints that the board is full if no one won
     	else if(this.isBoardFull()) {
     		System.out.println("Board is full");
     	}
