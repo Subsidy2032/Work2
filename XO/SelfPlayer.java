@@ -47,8 +47,6 @@ public class SelfPlayer extends Player implements Runnable {
 			// Exists the function if the board is full
 			if(game.isBoardFull() || !game.getKeepPlaying()) {
 				game.setKeepPlaying(false);
-				game.setTurn(this);
-				game.notifyAll();
 				return;
 			}
 			
